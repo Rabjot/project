@@ -1,0 +1,57 @@
+#include<stdio.h>
+#include<unistd.h>
+#include<stdlib.h>
+#include<string.h>
+
+int main()
+{
+int remain=0,n;
+int time,wait=0;
+int turnaround=0;
+
+int a_t[10],b_t[10],r_t[10],end,i,lowest;
+
+printf("\t\t\t\n\t\t\tRead the following and enter the details carefully as per requirement :\n\n");
+printf("Enter number of processes : ");
+scanf("%d",&n);
+
+for(i=0;i<n;i++)
+{
+      printf("Enter Arrival time for Process P%d : ",i+1);
+      scanf("%d",&a_t[i]);
+      printf("Enter Burst time for Process P%d : ",i+1);
+      scanf("%d",&b_t[i]);
+r_t[i]=b_t[i];
+}
+printf("\n\nProcess\t\t|Turnaround Time| Waiting Time\n\n");
+r_t[9]=9999;
+
+for(time=0;remain!=n;time++)
+{
+lowest=9;
+
+for(i=0;i<n;i++)
+{
+if(a_t[i]<=time && r_t[i]<r_t[lowest] && r_t[i]>0)
+{
+lowest=i;
+}}
+
+  r_t[lowest]--;
+  if(r_t[lowest]==0)
+{
+remain++;
+end=time+1;
+               printf("\nP[%d]\t|\t%d\t|\t%d",lowest+1,end-a_t[lowest],end-b_t[lowest]-a_t[lowest]);
+     wait+=end-b_t[lowest]-a_t[lowest];
+    turnaround += end-a_t[lowest];
+}
+}
+         printf("\n\nAverage waiting time = %f\n",wait*1.0/n);
+          printf("Average turnaround time = %f",turnaround*1.0/5);
+
+
+return 0;
+}
+
+
